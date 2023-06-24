@@ -16,7 +16,6 @@ public class Utilities {
     public static String printRs(ResultSet rs) throws SQLException {
         ResultSetMetaData md = rs.getMetaData();
         int nCols = md.getColumnCount();
-        String s;
 
         doBoth("---\t" + md.getTableName(1) + "\t---\n");
 
@@ -39,12 +38,12 @@ public class Utilities {
         if (stackTrace.length >= 3) {
             int traceIndex = 2;
 
-            String className = stackTrace[traceIndex].getClassName();
+            //String className = stackTrace[traceIndex].getClassName();
             String methodName = stackTrace[traceIndex].getMethodName();
             String fileName = stackTrace[traceIndex].getFileName();
             int lineNumber = stackTrace[traceIndex].getLineNumber();
 
-            return "[" + fileName.replace(".java", "") + "." + methodName + "() - row " + lineNumber + "]\t";
+            return "[" + fileName.replace(".java", "") + "." + methodName + "() - row " + lineNumber + "]\t\t";
         }
 
         return "[Utilis.debHelp()] --> ERROR\n";
