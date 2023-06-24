@@ -9,7 +9,7 @@ public class Utilities {
     static StringBuilder reSb = new StringBuilder();
 
     public static void doBoth(String s) {
-        System.out.print(s);    //  debug
+        //System.out.print(s);    //  debug
         reSb.append(s);         //  function's sake
     }
 
