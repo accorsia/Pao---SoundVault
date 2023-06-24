@@ -36,7 +36,7 @@ public class Utilities {
     public static String debHelp() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 
-        if (stackTrace.length == 3) {
+        if (stackTrace.length >= 3) {
             int traceIndex = 2;
 
             String className = stackTrace[traceIndex].getClassName();
@@ -44,7 +44,7 @@ public class Utilities {
             String fileName = stackTrace[traceIndex].getFileName();
             int lineNumber = stackTrace[traceIndex].getLineNumber();
 
-            return "[" + fileName.replace(".java", "") + "." + methodName + "() --- row " + lineNumber + "]\t";
+            return "[" + fileName.replace(".java", "") + "." + methodName + "() - row " + lineNumber + "]\t";
         }
 
         return "[Utilis.debHelp()] --> ERROR\n";
