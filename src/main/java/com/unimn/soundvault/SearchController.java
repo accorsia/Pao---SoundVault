@@ -84,8 +84,9 @@ public class SearchController {
 
     //  Populate 'artist\albumMetadata'
     public static void populateGridPane(GridPane gridPane, ResultSet rs) throws SQLException {
-        ResultSetMetaData md = rs.getMetaData();
 
+        gridPane.getChildren().clear();     //  remove old label --> so they won't overlap
+        ResultSetMetaData md = rs.getMetaData();
         Label name = null;
         Label value = null;
 
@@ -98,27 +99,9 @@ public class SearchController {
 
             gridPane.add(name, 0, i-1); //  <column, row>
             gridPane.add(value, 1, i-1);
-
-
-            System.out.println("name = " + name.getText());
-            System.out.println("value = " + value.getText());
         }
-        // Cancella il testo delle etichette ad ogni iterazione
-        assert name != null;
 
-        System.out.println("-----\n");
-        System.out.println("name = " + name.getText());
-        System.out.println("value = " + value.getText());
-
-        name.setText("");
-        value.setText("");
-
-        System.out.println("-----\n");
-
-        System.out.println("-----\n");
-        System.out.println("name = " + name.getText());
-        System.out.println("value = " + value.getText());
-
+        gridPane.setGridLinesVisible(true);     //  restore grid lines
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
