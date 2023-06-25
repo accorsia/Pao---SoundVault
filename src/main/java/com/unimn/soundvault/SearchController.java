@@ -86,14 +86,31 @@ public class SearchController {
         //  Check: something in the search field
         if (albumSearchField.getText().isEmpty())
         {
-            String errorMessage = "ERROR:\tScrivi un testo di ricerca";
-            tableShower.setText(errorMessage);
-            System.out.println(Utilities.debHelp() + errorMessage);
+            String errorMessage = "Scrivi un testo di ricerca";
+
+            //  Alert popup
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Error");
+            alert.setContentText(errorMessage);
+
+            alert.showAndWait();
+
+            System.out.println(Utilities.debHelp() + "ERROR:\t" + errorMessage);
         }
 
         //  Check: one radioButton selected
         else if (albumRadio.getSelectedToggle() == null)
         {
+
+            //  TODO:   pop up dialog error
+            /*Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Error");
+            alert.setContentText(errorMessage);
+
+            alert.showAndWait();*/
+
             String errorMessage = "ERROR:\tSeleziona 1 parametro di ricerca";
             tableShower.setText(errorMessage);
             System.out.println(Utilities.debHelp() + errorMessage);
@@ -105,11 +122,11 @@ public class SearchController {
             if (albRadButt_idb.isSelected())
                 targetColumn = "idb";
             else if (albRadButt_gold.isSelected())
-                targetColumn = "Name";
-            else if (albRadButt_name.isSelected())
-                targetColumn = "Release";
-            else if (albRadButt_plat.isSelected())
                 targetColumn = "Gold";
+            else if (albRadButt_name.isSelected())
+                targetColumn = "Name";
+            else if (albRadButt_plat.isSelected())
+                targetColumn = "Plat";
 
             String query = "SELECT * FROM Album WHERE \"" + targetColumn + "\" = \"" + albumSearchField.getText() + "\"";
             String tableToShow = Utilities.printRs(Main.db.executeQuery(query));

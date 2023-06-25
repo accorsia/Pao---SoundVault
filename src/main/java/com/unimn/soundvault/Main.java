@@ -34,10 +34,14 @@ public class Main extends Application {
         //  Scene scene = new Scene(fxmlLoader.load(), 320, 240);*/
 
 
-        /*  Set containers  */
+        //  Set containers
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
+        /*//  .css
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());*/
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
