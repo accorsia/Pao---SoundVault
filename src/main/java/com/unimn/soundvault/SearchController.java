@@ -30,8 +30,10 @@ public class SearchController {
     public RadioButton albRadButt_name;
     public RadioButton albRadButt_plat;
 
+    //  TextField
     public TextField artistSearchField;
     public TextField albumSearchField;
+
     public TitledPane artistMetadata;
     public TitledPane albumMetadata;
 
@@ -41,44 +43,81 @@ public class SearchController {
     public void SearchForArtist(ActionEvent actionEvent) throws SQLException {
         String targetColumn = "Name";       //  default option: 'Name'
 
-        //  TODO:   Could implement a listener to avoid this switch ---> Currently, more than 1 radioButton can be selected
-        //   at the same time
-        if (artRadBut_ida.isSelected())
-            targetColumn = "Ida";
-        else if (artRadBut_stage.isSelected())
-            targetColumn = "Stage Name";
-        else if (artRadBut_birth.isSelected())
-            targetColumn = "Birth";
-        else if (artRadBut_name.isSelected())
-            targetColumn = "Name";
+        //  Check: something in the search field
+        if (artistSearchField.getText().isEmpty())
+        {
+            String errorMessage = "ERROR:\tScrivi un testo di ricerca";
+            tableShower.setText(errorMessage);
+            System.out.println(Utilities.debHelp() + errorMessage);
+        }
 
-        String query = "SELECT * FROM Artist WHERE \"" + targetColumn + "\" = \"" + artistSearchField.getText() + "\"";
-        System.out.println(Utilities.debHelp() + "Query:\t" + query);
-        String tableToShow = Utilities.printRs(Main.db.executeQuery(query));
+        //  Check: one radioButton selected
+        else if (artistRadio.getSelectedToggle() == null)
+        {
+            String errorMessage = "ERROR:\tSeleziona 1 parametro di ricerca";
+            tableShower.setText(errorMessage);
+            System.out.println(Utilities.debHelp() + errorMessage);
+        }
 
-        tableShower.setText(tableToShow);
-        GetArtistMetadata(Main.db.executeQuery(query));    //  launch 'artistMetadata' update
+        //  Execute the research
+        else
+        {
+            if (artRadBut_ida.isSelected())
+                targetColumn = "Ida";
+            else if (artRadBut_stage.isSelected())
+                targetColumn = "Stage Name";
+            else if (artRadBut_birth.isSelected())
+                targetColumn = "Birth";
+            else if (artRadBut_name.isSelected())
+                targetColumn = "Name";
+
+            String query = "SELECT * FROM Artist WHERE \"" + targetColumn + "\" = \"" + artistSearchField.getText() + "\"";
+            String tableToShow = Utilities.printRs(Main.db.executeQuery(query));
+
+            tableShower.setText(tableToShow);
+        }
+
+
     }
 
     public void SearchForAlbum(ActionEvent actionEvent) throws SQLException {
         String targetColumn = "Name";       //  default option: 'Name'
 
-        //  TODO:   Could implement a listener to avoid this switch ---> Currently, more than 1 radioButton can be selected
-        //   at the same time
-        if (albRadButt_idb.isSelected())
-            targetColumn = "idb";
-        else if (albRadButt_gold.isSelected())
-            targetColumn = "Name";
-        else if (albRadButt_name.isSelected())
-            targetColumn = "Release";
-        else if (albRadButt_plat.isSelected())
-            targetColumn = "Gold";
+        //  Check: something in the search field
+        if (albumSearchField.getText().isEmpty())
+        {
+            String errorMessage = "ERROR:\tScrivi un testo di ricerca";
+            tableShower.setText(errorMessage);
+            System.out.println(Utilities.debHelp() + errorMessage);
+        }
 
-        String query = "SELECT * FROM Album WHERE \"" + targetColumn + "\" = \"" + albumSearchField.getText() + "\"";
-        System.out.println(Utilities.debHelp() + "Query:\t" + query);
-        String tableToShow = Utilities.printRs(Main.db.executeQuery(query));
+        //  Check: one radioButton selected
+        else if (albumRadio.getSelectedToggle() == null)
+        {
+            String errorMessage = "ERROR:\tSeleziona 1 parametro di ricerca";
+            tableShower.setText(errorMessage);
+            System.out.println(Utilities.debHelp() + errorMessage);
+        }
 
-        tableShower.setText(tableToShow);
+        //  Execute research
+        else
+        {
+            if (albRadButt_idb.isSelected())
+                targetColumn = "idb";
+            else if (albRadButt_gold.isSelected())
+                targetColumn = "Name";
+            else if (albRadButt_name.isSelected())
+                targetColumn = "Release";
+            else if (albRadButt_plat.isSelected())
+                targetColumn = "Gold";
+
+            String query = "SELECT * FROM Album WHERE \"" + targetColumn + "\" = \"" + albumSearchField.getText() + "\"";
+            String tableToShow = Utilities.printRs(Main.db.executeQuery(query));
+
+            tableShower.setText(tableToShow);
+        }
+
+
     }
 
     //  TODO:    metadata shower - event handler
@@ -90,7 +129,7 @@ public class SearchController {
             sb.append(md.getColumnName(i) + ":\t" + rs.getString(i) + "\n");
 
         artistMetadata.setAccessibleText(sb.toString());
-        System.out.println(Utilities.debHelp() + sb.toString());
+        System.out.println(Utilities.debHelp() + sb);
 
     }
 

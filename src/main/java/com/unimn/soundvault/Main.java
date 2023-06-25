@@ -44,5 +44,16 @@ public class Main extends Application {
 
         stage.setTitle("SoundVault!");
         stage.show();
+
+        //  Close database when you close the form
+        stage.setOnCloseRequest(event -> {
+            if (db != null) {
+                try {
+                    db.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 }

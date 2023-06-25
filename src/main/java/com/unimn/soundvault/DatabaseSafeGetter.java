@@ -7,12 +7,9 @@ public class DatabaseSafeGetter {
 
         DatabaseManager db = null;
         try {
-            System.out.print(Utilities.debHelp() + "> Connecting to database...");
             db = new DatabaseManager();
-            System.out.println("OK!");
 
             //  Update database: "# Gold", "# Plat"
-            System.out.print(Utilities.debHelp() + "> Updating database...");
             db.executeUpdate("""
                     UPDATE Artist
                     SET `# Gold` = (
@@ -27,11 +24,11 @@ public class DatabaseSafeGetter {
                         WHERE Album.ida = Artist.ida\s
                         AND Album.Plat = 1
                     );""");
-            System.out.println("OK!");
+
         }
         catch (SQLException e)
         {
-            System.out.print(Utilities.debHelp() + "> Something went wrong ---> Restoring database...\n");
+            System.out.print(Utilities.debHelp() + "> Something went wrong ---> You should restore the database...\n");
             e.printStackTrace();
             //  db.restore();
         }

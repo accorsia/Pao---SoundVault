@@ -12,11 +12,15 @@ public class DatabaseManager {
         Class.forName("org.sqlite.jdbc");
          */
 
+        System.out.print(Utilities.debHelp() + "> Connecting to database...");  //  debug
+
         //  2)  Establish a connection
         conn = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
 
         //  3)  Create JDBC Statement
         statement = conn.createStatement();
+
+        System.out.println("OK!");  //  debug
     }
 
     public void close() throws SQLException {
@@ -24,6 +28,9 @@ public class DatabaseManager {
             statement.close();
             conn.close();
         }
+
+        System.out.print(Utilities.debHelp() + "> Closing database...\n");  //  debug
+
     }
 
     //  Restore db. with 3 base record
@@ -53,11 +60,14 @@ public class DatabaseManager {
 
     //  Read
     public ResultSet executeQuery(String query) throws SQLException {
+        System.out.print(Utilities.debHelp() + "> Executing the query:\t\"" + query + "\"\n");
         return statement.executeQuery(query);
     }
 
     //  Write
     public int executeUpdate(String query) throws SQLException {
+
+        System.out.print(Utilities.debHelp() + "> Updating database...\n");
         return statement.executeUpdate(query);
     }
 
