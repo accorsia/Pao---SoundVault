@@ -3,7 +3,7 @@ package com.unimn.soundvault;
 import java.sql.SQLException;
 
 public class DatabaseSafeGetter {
-    public static DatabaseManager main() {
+    public static DatabaseManager getDb() {
 
         DatabaseManager db = null;
         try {

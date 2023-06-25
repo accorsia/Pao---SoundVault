@@ -1,9 +1,16 @@
 package com.unimn.soundvault;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.util.Callback;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -12,8 +19,8 @@ import java.sql.SQLException;
 public class SearchController {
     @FXML   //  load 'Main.fxml'
 
-    //  Text area
-    public TextArea tableShower;
+    //  TableText area
+    public TableView mainTable;
 
     //  Radio button
     public ToggleGroup artistRadio;
@@ -34,9 +41,85 @@ public class SearchController {
     public TextField artistSearchField;
     public TextField albumSearchField;
 
-    public TitledPane artistMetadata;
-    public TitledPane albumMetadata;
+    //  Grid pane
+    public GridPane artistMetadataPane;
+    public GridPane albumMetadataPane;
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //  Populate: 'mainTable'
+    public static void populateTable(TableView tableview, ResultSet rs) throws SQLException {
+
+        tableview.getColumns().clear(); //  clean table
+
+        //  Add data to ObservableList<ObservableList> ~ matrix
+        for(int i=0 ; i<rs.getMetaData().getColumnCount(); i++)
+        {
+            //  We are using non property style for making dynamic table
+            final int j = i;
+            TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i+1));
+            col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>) param -> new SimpleStringProperty(param.getValue().get(j).toString()));
+
+            tableview.getColumns().addAll(col);
+        }
+
+        ObservableList<ObservableList> data = FXCollections.observableArrayList();
+
+        //  Add columns to value
+        while(rs.next())
+        {
+            ObservableList<String> row = FXCollections.observableArrayList();
+
+            //  iterate Row
+            for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++)
+                row.add(rs.getString(i));   //  iterate Column
+
+            data.add(row);
+        }
+
+        tableview.setItems(data);   //  Add matrix to tableview
+
+    }
+
+    //  Populate 'artist\albumMetadata'
+    public static void populateGridPane(GridPane gridPane, ResultSet rs) throws SQLException {
+        ResultSetMetaData md = rs.getMetaData();
+
+        Label name = null;
+        Label value = null;
+
+        for(int i=1; i<=md.getColumnCount(); i++)
+        {
+            name = new Label(md.getColumnName(i));
+            value = new Label(rs.getString(i));
+
+            name.setFont(Font.font ("Verdana", FontWeight.BOLD, 12));   //  set style for label
+
+            gridPane.add(name, 0, i-1); //  <column, row>
+            gridPane.add(value, 1, i-1);
+
+
+            System.out.println("name = " + name.getText());
+            System.out.println("value = " + value.getText());
+        }
+        // Cancella il testo delle etichette ad ogni iterazione
+        assert name != null;
+
+        System.out.println("-----\n");
+        System.out.println("name = " + name.getText());
+        System.out.println("value = " + value.getText());
+
+        name.setText("");
+        value.setText("");
+
+        System.out.println("-----\n");
+
+        System.out.println("-----\n");
+        System.out.println("name = " + name.getText());
+        System.out.println("value = " + value.getText());
+
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -46,17 +129,17 @@ public class SearchController {
         //  Check: something in the search field
         if (artistSearchField.getText().isEmpty())
         {
-            String errorMessage = "ERROR:\tScrivi un testo di ricerca";
-            tableShower.setText(errorMessage);
-            System.out.println(Utilities.debHelp() + errorMessage);
+            String errorMessage = "Scrivi un testo di ricerca";
+            CreateAlert(errorMessage);  //  Alert popup
+            System.out.println(Utilities.debHelp() + "ERROR:\t" + errorMessage);
         }
 
         //  Check: one radioButton selected
         else if (artistRadio.getSelectedToggle() == null)
         {
             String errorMessage = "ERROR:\tSeleziona 1 parametro di ricerca";
-            tableShower.setText(errorMessage);
-            System.out.println(Utilities.debHelp() + errorMessage);
+            CreateAlert(errorMessage);
+            System.out.println(Utilities.debHelp() + "ERROR:\t" + errorMessage);
         }
 
         //  Execute the research
@@ -72,9 +155,9 @@ public class SearchController {
                 targetColumn = "Name";
 
             String query = "SELECT * FROM Artist WHERE \"" + targetColumn + "\" = \"" + artistSearchField.getText() + "\"";
-            String tableToShow = Utilities.printRs(Main.db.executeQuery(query));
 
-            tableShower.setText(tableToShow);
+            populateTable(mainTable, Main.db.executeQuery(query));    //  Update 'mainTable'
+            populateGridPane(artistMetadataPane, Main.db.executeQuery(query));
         }
 
 
@@ -87,33 +170,16 @@ public class SearchController {
         if (albumSearchField.getText().isEmpty())
         {
             String errorMessage = "Scrivi un testo di ricerca";
-
-            //  Alert popup
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText("Error");
-            alert.setContentText(errorMessage);
-
-            alert.showAndWait();
-
+            CreateAlert(errorMessage);  //  Alert popup
             System.out.println(Utilities.debHelp() + "ERROR:\t" + errorMessage);
         }
 
         //  Check: one radioButton selected
         else if (albumRadio.getSelectedToggle() == null)
         {
-
-            //  TODO:   pop up dialog error
-            /*Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText("Error");
-            alert.setContentText(errorMessage);
-
-            alert.showAndWait();*/
-
-            String errorMessage = "ERROR:\tSeleziona 1 parametro di ricerca";
-            tableShower.setText(errorMessage);
-            System.out.println(Utilities.debHelp() + errorMessage);
+            String errorMessage = "Seleziona 1 parametro di ricerca";
+            CreateAlert(errorMessage);  //  Alert popup
+            System.out.println(Utilities.debHelp() + "ERROR:\t" + errorMessage);
         }
 
         //  Execute research
@@ -129,23 +195,37 @@ public class SearchController {
                 targetColumn = "Plat";
 
             String query = "SELECT * FROM Album WHERE \"" + targetColumn + "\" = \"" + albumSearchField.getText() + "\"";
-            String tableToShow = Utilities.printRs(Main.db.executeQuery(query));
 
-            tableShower.setText(tableToShow);
+            populateTable(mainTable, Main.db.executeQuery(query));
+            populateGridPane(albumMetadataPane, Main.db.executeQuery(query));
+
+            //  Also show metadata for the artist's album
+            String albumIda = Main.db.executeQuery(query).getString(6);
+            String artistQuery = "SELECT * FROM Artist where \"Ida\" = \"" +  albumIda + "\"";
+            populateGridPane(artistMetadataPane, Main.db.executeQuery(artistQuery));
         }
 
 
     }
 
-    //  TODO:    metadata shower - event handler
-    public void GetArtistMetadata(ResultSet rs) throws SQLException {
+    private void CreateAlert(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText("Error");
+        alert.setContentText(errorMessage);
+
+        alert.showAndWait();
+    }
+
+    //  Debugger sake
+    public static void GetArtistMetadata(ResultSet rs) throws SQLException {
         ResultSetMetaData md = rs.getMetaData();
         StringBuilder sb = new StringBuilder();
 
         for(int i=1; i<=md.getColumnCount(); i++)
             sb.append(md.getColumnName(i) + ":\t" + rs.getString(i) + "\n");
 
-        artistMetadata.setAccessibleText(sb.toString());
+
         System.out.println(Utilities.debHelp() + sb);
 
     }

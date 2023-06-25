@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,10 +20,10 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException, SQLException {
+    public void start(Stage stage) throws IOException {
 
         //  Safely connect to database
-        db = DatabaseSafeGetter.main();
+        db = DatabaseSafeGetter.getDb();
         System.out.println(Utilities.debHelp() + "> Main.java got the database!");
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,20 +35,20 @@ public class Main extends Application {
         //  Scene scene = new Scene(fxmlLoader.load(), 320, 240);*/
 
 
-        //  Set containers
+        //  Set containers/
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
 
-        /*//  .css
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());*/
-
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("img/icon.png")).openStream());
+        stage.getIcons().add(icon);
+
         stage.setTitle("SoundVault!");
         stage.show();
+
 
         //  Close database when you close the form
         stage.setOnCloseRequest(event -> {
