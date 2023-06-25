@@ -55,4 +55,25 @@ public class SearchController {
 
         tableShower.setText(tableToShow);
     }
+
+    public void SearchForAlbum(ActionEvent actionEvent) throws SQLException {
+        String targetColumn = "Name";       //  default option: 'Name'
+
+        //  TODO:   Could implement a listener to avoid this switch ---> Currently, more than 1 radioButton can be selected
+        //   at the same time
+        if (albRadButt_idb.isSelected())
+            targetColumn = "idb";
+        else if (albRadButt_gold.isSelected())
+            targetColumn = "Name";
+        else if (albRadButt_name.isSelected())
+            targetColumn = "Release";
+        else if (albRadButt_plat.isSelected())
+            targetColumn = "Gold";
+
+        String query = "SELECT * FROM Album WHERE \"" + targetColumn + "\" = \"" + albumSearchField.getText() + "\"";
+        System.out.println(Utilities.debHelp() + "Query:\t" + query);
+        String tableToShow = Utilities.printRs(Main.db.executeQuery(query));
+
+        tableShower.setText(tableToShow);
+    }
 }
