@@ -2,11 +2,11 @@ package com.unimn.soundvault;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class SearchController {
@@ -32,6 +32,9 @@ public class SearchController {
 
     public TextField artistSearchField;
     public TextField albumSearchField;
+    public TitledPane artistMetadata;
+    public TitledPane albumMetadata;
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,6 +57,7 @@ public class SearchController {
         String tableToShow = Utilities.printRs(Main.db.executeQuery(query));
 
         tableShower.setText(tableToShow);
+        GetArtistMetadata(Main.db.executeQuery(query));    //  launch 'artistMetadata' update
     }
 
     public void SearchForAlbum(ActionEvent actionEvent) throws SQLException {
@@ -76,4 +80,18 @@ public class SearchController {
 
         tableShower.setText(tableToShow);
     }
+
+    //  TODO:    metadata shower - event handler
+    public void GetArtistMetadata(ResultSet rs) throws SQLException {
+        ResultSetMetaData md = rs.getMetaData();
+        StringBuilder sb = new StringBuilder();
+
+        for(int i=1; i<=md.getColumnCount(); i++)
+            sb.append(md.getColumnName(i) + ":\t" + rs.getString(i) + "\n");
+
+        artistMetadata.setAccessibleText(sb.toString());
+        System.out.println(Utilities.debHelp() + sb.toString());
+
+    }
+
 }

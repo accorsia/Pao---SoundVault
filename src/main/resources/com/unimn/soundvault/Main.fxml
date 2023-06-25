@@ -13,18 +13,18 @@
    <children>
       <Button layoutX="171.0" layoutY="14.0" mnemonicParsing="false" onAction="#SearchForArtist" text="search" />
       <TextArea fx:id="tableShower" layoutX="291.0" layoutY="13.0" prefHeight="235.0" prefWidth="295.0" />
-      <TitledPane animated="false" layoutX="12.0" layoutY="252.0" prefHeight="134.0" prefWidth="270.0" text="Artist metadata">
+      <TitledPane fx:id="artistMetadata" animated="false" layoutX="12.0" layoutY="252.0" prefHeight="134.0" prefWidth="270.0" text="Artist metadata">
         <content>
-          <AnchorPane fx:id="ArtistMetadata" minHeight="0.0" minWidth="0.0" prefHeight="86.0" prefWidth="187.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="86.0" prefWidth="187.0" />
         </content>
       </TitledPane>
-      <TitledPane animated="false" layoutX="291.0" layoutY="252.0" prefHeight="134.0" prefWidth="295.0" text="Album metadata">
+      <TitledPane fx:id="albumMetadata" animated="false" layoutX="291.0" layoutY="252.0" prefHeight="134.0" prefWidth="295.0" text="Album metadata">
         <content>
-          <AnchorPane fx:id="albumMetadata" minHeight="0.0" minWidth="0.0" prefHeight="19.0" prefWidth="293.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="19.0" prefWidth="293.0" />
         </content>
       </TitledPane>
       <TextField fx:id="artistSearchField" layoutX="14.0" layoutY="14.0" promptText="search your artist here..." />
-      <Button layoutX="171.0" layoutY="141.0" mnemonicParsing="false" text="search" />
+      <Button layoutX="171.0" layoutY="141.0" mnemonicParsing="false" onAction="#SearchForAlbum" text="search" />
       <TextField fx:id="albumSearchField" layoutX="14.0" layoutY="141.0" promptText="search your album here..." />
       <RadioButton fx:id="artRadBut_ida" layoutX="14.0" layoutY="70.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(a)">
          <toggleGroup>
