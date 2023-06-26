@@ -20,7 +20,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException {
 
         //  Safely connect to database
         db = DatabaseSafeGetter.getDb();
@@ -35,7 +35,7 @@ public class Main extends Application {
         //  Scene scene = new Scene(fxmlLoader.load(), 320, 240);*/
 
 
-        //  Set containers/
+        //  Set containers
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

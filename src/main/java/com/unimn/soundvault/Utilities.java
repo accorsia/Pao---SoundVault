@@ -6,30 +6,29 @@ import java.sql.SQLException;
 
 public class Utilities {
 
-    static StringBuilder reSb = new StringBuilder();
-
-    public static void doBoth(String s) {
+    public static void doBoth(String s, StringBuilder reSb) {
         //System.out.print(s);    //  debug
         reSb.append(s);         //  function's sake
     }
 
     public static String printRs(ResultSet rs) throws SQLException {
+        StringBuilder out = new StringBuilder();    //  final string
         ResultSetMetaData md = rs.getMetaData();
         int nCols = md.getColumnCount();
 
-        doBoth("---\t" + md.getTableName(1) + "\t---\n");
+        doBoth("---\t" + md.getTableName(1) + "\t---\n", out);
 
         for (int i = 0; rs.next(); i++)    //  scroll rows
         {
-            doBoth("[" + i + "]\t");
+            doBoth("[" + i + "]\t", out);
 
             for (int j = 1; j <= nCols; j++)     //  scroll columns
-                doBoth(md.getColumnName(j) + " = " + rs.getObject(j).toString() + "\t\t|\t\t");
+                doBoth(md.getColumnName(j) + " = " + rs.getObject(j).toString() + "\t\t|\t\t", out);
 
-            doBoth("\n");   //  new record -> new line
+            doBoth("\n", out);   //  new record -> new line
         }
 
-        return reSb.toString();
+        return out.toString();
     }
 
     public static String debHelp() {
@@ -47,6 +46,6 @@ public class Utilities {
         }
 
         return "[Utilis.debHelp()] --> ERROR\n";
-
     }
+
 }

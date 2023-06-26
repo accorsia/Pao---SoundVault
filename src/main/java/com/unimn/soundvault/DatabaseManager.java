@@ -1,11 +1,17 @@
 package com.unimn.soundvault;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 
 public class DatabaseManager {
+
     protected Connection conn;
     protected Statement statement;
 
-    public DatabaseManager() throws SQLException {
+    public DatabaseManager() throws SQLException, IOException {
         /*
         1)  Load vendor specific class
 
@@ -14,11 +20,8 @@ public class DatabaseManager {
 
         System.out.print(Utilities.debHelp() + "> Connecting to database...");  //  debug
 
-        //  2)  Establish a connection
-        conn = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");
-
-        //  3)  Create JDBC Statement
-        statement = conn.createStatement();
+        conn = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite");    //  2)  Establish a connection
+        statement = conn.createStatement();     //  3)  Create JDBC Statement
 
         System.out.println("OK!");  //  debug
     }
@@ -30,32 +33,35 @@ public class DatabaseManager {
         }
 
         System.out.print(Utilities.debHelp() + "> Closing database...\n");  //  debug
-
     }
 
-    //  Restore db. with 3 base record
-    public void restore() throws SQLException {
-        statement.executeQuery("drop table if exists Artist");
-        statement.executeQuery("""
-                create table Artist (
-                    ida serial primary key,
-                    "Stage Name" varchar not null,
-                    Birth date not null,
-                    "# Gold" integer default 0,
-                    "# Plat" integer default 0,
-                    Name varchar
-                );
-                """);
+    public void updateDb() throws SQLException, IOException {
+        System.out.print(Utilities.debHelp() + "> Updating database...");
+        executeSqlScript("GoldPlatUpdater.sql");
+        System.out.println("...OK");
+    }
 
-        //  add 3 base record
-        statement.executeQuery("""
-                insert into Artist (ida, "Stage Name", Birth, "# Gold", "# Plat", Name)
-                values
-                    (1, 'Sfera Ebbasta', '1990-01-01', 0, 0, 'Gionata Boschetti'),
-                    (2, 'Tedua', '1993-05-15', 0, 0, 'Mario Mariotti'),
-                    (3, 'Mirko', '1994-07-12', 0, 0, 'Mirco Ferrari');
-                """);
+    public void executeSqlScript(String scriptFileName) throws IOException, SQLException
+    {
+        String scriptAbsPath = System.getProperty("user.dir") + "\\src\\SQLScripts\\" + scriptFileName;
+        Path scriptPath = Paths.get(scriptAbsPath);
 
+        BufferedReader reader = new BufferedReader(new FileReader(scriptPath.toFile()));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        reader.close();
+
+        statement.executeUpdate(sb.toString());
+    }
+
+    public void restore() throws SQLException, IOException {
+        statement.executeQuery("drop table if exists Artist");  //  delete
+        executeSqlScript("CreateDb.sql");               //  create
+        executeSqlScript("RestoreArtistValues.sql");    //  fill Artist
+        executeSqlScript("RestoreAlbumValues.sql");     //  fill Album
     }
 
     //  Read
@@ -71,7 +77,6 @@ public class DatabaseManager {
         return statement.executeUpdate(query);
     }
 
-    //  print()
     public String printRs(ResultSet rs) throws SQLException {
         return Utilities.printRs(rs);
     }
@@ -98,6 +103,5 @@ public class DatabaseManager {
         }
         tableResultSet.close();
     }
-
 
 }

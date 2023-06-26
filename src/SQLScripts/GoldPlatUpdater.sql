@@ -1,5 +1,5 @@
-UPDATE Artist
-SET `# Gold` = (
+UPDATE Artist SET
+    `# Gold` = (
     SELECT COUNT(*)
     FROM Album
     WHERE Album.ida = Artist.ida
