@@ -6,18 +6,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class SearchController {
     @FXML   //  load 'Main.fxml'
+
+    //  (main) AnchorPane
+    public AnchorPane mainPane;
 
     //  TableText area
     public TableView mainTable;
@@ -44,6 +53,7 @@ public class SearchController {
     //  Grid pane
     public GridPane artistMetadataPane;
     public GridPane albumMetadataPane;
+
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,8 +203,8 @@ public class SearchController {
 
     private void CreateAlert(String errorMessage) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Information Dialog");
-        alert.setHeaderText("Error");
+        alert.setTitle("Error");
+        alert.setHeaderText("Error during input");
         alert.setContentText(errorMessage);
 
         alert.showAndWait();
@@ -208,9 +218,40 @@ public class SearchController {
         for(int i=1; i<=md.getColumnCount(); i++)
             sb.append(md.getColumnName(i) + ":\t" + rs.getString(i) + "\n");
 
-
         System.out.println(Utilities.debHelp() + sb);
-
     }
+
+
+    public void OpenAbout(ActionEvent event) throws SQLException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About");
+        alert.setHeaderText(null);
+
+        //  Create about info text
+        String sb = "SoundVault by Alessandro Accorsi\n" +  //  author metadata
+                "github: https://github.com/AlessandroVerdad/Pao--SoundVault\n" +
+                DatabaseSafeGetter.db.getMetadata();    //  database metadata
+
+        alert.setContentText(sb);
+        alert.showAndWait();
+    }
+
+    public void NewHandler(ActionEvent event) throws IOException {  //  IOException --> function could not find .fxml file
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AddArtist.fxml"));
+        Parent addArtistRoot = loader.load();
+        AddArtistController addArtistController = loader.getController();
+
+        /* Se invece volessi aggiungere il pannello al contenitore principale
+        mainPane.getChildren().add(addArtistRoot);
+         */
+
+        //  Create stage + scene for the new panel
+        Scene addArtistScene = new Scene(addArtistRoot);
+        Stage addArtistStage = new Stage();
+        addArtistStage.setScene(addArtistScene);
+        addArtistStage.show();
+    }
+
 
 }

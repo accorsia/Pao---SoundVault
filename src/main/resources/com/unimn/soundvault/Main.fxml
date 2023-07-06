@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableView?>
@@ -12,29 +15,29 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="564.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unimn.soundvault.SearchController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="564.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unimn.soundvault.SearchController">
    <children>
-      <Button fx:id="artistSearchButton" layoutX="171.0" layoutY="14.0" mnemonicParsing="false" onAction="#SearchForArtist" text="search" />
-      <TextField fx:id="artistSearchField" layoutX="14.0" layoutY="14.0" promptText="search your artist here..." />
-      <Button fx:id="albumSearchButton" layoutX="171.0" layoutY="141.0" mnemonicParsing="false" onAction="#SearchForAlbum" text="search" />
-      <TextField fx:id="albumSearchField" layoutX="14.0" layoutY="141.0" promptText="search your album here..." />
-      <RadioButton fx:id="artRadBut_ida" layoutX="14.0" layoutY="70.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(a)">
+      <Button fx:id="artistSearchButton" layoutX="172.0" layoutY="38.0" mnemonicParsing="false" onAction="#SearchForArtist" text="search" />
+      <TextField fx:id="artistSearchField" layoutX="15.0" layoutY="38.0" promptText="search your artist here..." />
+      <Button fx:id="albumSearchButton" layoutX="171.0" layoutY="152.0" mnemonicParsing="false" onAction="#SearchForAlbum" text="search" />
+      <TextField fx:id="albumSearchField" layoutX="14.0" layoutY="152.0" promptText="search your album here..." />
+      <RadioButton fx:id="artRadBut_ida" layoutX="15.0" layoutY="94.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(a)">
          <toggleGroup>
             <ToggleGroup fx:id="artistRadio" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="artRadBut_stage" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Stage Name" toggleGroup="$artistRadio" />
-      <RadioButton fx:id="artRadBut_birth" layoutX="121.0" layoutY="70.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Birth" toggleGroup="$artistRadio" />
-      <RadioButton fx:id="artRadBut_name" layoutX="121.0" layoutY="95.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Name" toggleGroup="$artistRadio" />
-      <Text layoutX="21.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What will you write in the texfield?" wrappingWidth="206.0" />
-      <RadioButton fx:id="albRadButt_idb" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(b)">
+      <RadioButton fx:id="artRadBut_stage" layoutX="15.0" layoutY="119.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Stage Name" toggleGroup="$artistRadio" />
+      <RadioButton fx:id="artRadBut_birth" layoutX="122.0" layoutY="94.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Birth" toggleGroup="$artistRadio" />
+      <RadioButton fx:id="artRadBut_name" layoutX="122.0" layoutY="119.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Name" toggleGroup="$artistRadio" />
+      <Text layoutX="22.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What will you write in the texfield?" wrappingWidth="206.0" />
+      <RadioButton fx:id="albRadButt_idb" layoutX="12.0" layoutY="209.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(b)">
          <toggleGroup>
             <ToggleGroup fx:id="albumRadio" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="albRadButt_gold" layoutX="14.0" layoutY="227.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="# Gold" toggleGroup="$albumRadio" />
-      <RadioButton fx:id="albRadButt_name" layoutX="121.0" layoutY="202.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Name" toggleGroup="$albumRadio" />
-      <RadioButton fx:id="albRadButt_plat" layoutX="121.0" layoutY="227.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="# Plat" toggleGroup="$albumRadio" />
-      <Text layoutX="21.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What will you write in the texfield?" wrappingWidth="206.0" />
+      <RadioButton fx:id="albRadButt_gold" layoutX="12.0" layoutY="234.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="# Gold" toggleGroup="$albumRadio" />
+      <RadioButton fx:id="albRadButt_name" layoutX="119.0" layoutY="209.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Name" toggleGroup="$albumRadio" />
+      <RadioButton fx:id="albRadButt_plat" layoutX="119.0" layoutY="234.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="# Plat" toggleGroup="$albumRadio" />
+      <Text layoutX="18.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What will you write in the texfield?" wrappingWidth="206.0" />
       <TableView fx:id="mainTable" layoutX="255.0" layoutY="14.0" prefHeight="229.0" prefWidth="292.0" />
       <GridPane fx:id="artistMetadataPane" gridLinesVisible="true" layoutX="14.0" layoutY="267.0" prefHeight="119.0" prefWidth="251.0" style="-fx-background-color: white; -fx-border-radius: 10;">
         <columnConstraints>
@@ -59,5 +62,19 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <MenuBar layoutX="8.0" layoutY="2.0">
+        <menus>
+          <Menu fx:id="aboutMenu" mnemonicParsing="false" text="About">
+            <items>
+              <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#OpenAbout" text="Info" />
+            </items>
+          </Menu>
+          <Menu fx:id="addMenu" mnemonicParsing="false" text="Add">
+               <items>
+                  <MenuItem fx:id="addMenuArtistItem" mnemonicParsing="false" onAction="#NewHandler" text="Artist" />
+                  <MenuItem fx:id="addMenuAlbumItem" mnemonicParsing="false" text="Album" />
+               </items></Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>

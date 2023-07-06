@@ -1,0 +1,2 @@
+add new controller e xml files for menubar add artist\album
+--> each form requires textfield ---> user input will be used for the UPDATE query

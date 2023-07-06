@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+
 public class Utilities {
 
     public static void doBoth(String s, StringBuilder reSb) {
@@ -42,7 +43,7 @@ public class Utilities {
             String fileName = stackTrace[traceIndex].getFileName();
             int lineNumber = stackTrace[traceIndex].getLineNumber();
 
-            return "[" + fileName.replace(".java", "") + "." + methodName + "() - row " + lineNumber + "]\t\t";
+            return "[" + fileName.replace(".java", "") + "." + methodName + "() - row " + lineNumber + "]\t\t\t";
         }
 
         return "[Utilis.debHelp()] --> ERROR\n";

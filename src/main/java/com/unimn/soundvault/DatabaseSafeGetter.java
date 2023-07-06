@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class DatabaseSafeGetter {
+    public static DatabaseManager db;;
+
     public static DatabaseManager getDb() {
 
-        DatabaseManager db;
         try
         {
             db = new DatabaseManager();
@@ -18,14 +19,13 @@ public class DatabaseSafeGetter {
         {
             System.out.print(Utilities.debHelp() + "> Something went wrong ---> You should restore the database...\n");
             e.printStackTrace();
-
             //  db.restore();
-            return null;
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Errore durante l'accesso al file", e);
         }
 
-
+        return null;
     }
 }
