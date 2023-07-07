@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -21,8 +22,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Objects;
 
-public class SearchController {
+public class MainController {
     @FXML   //  load 'Main.fxml'
 
     //  (main) AnchorPane
@@ -236,11 +238,13 @@ public class SearchController {
         alert.showAndWait();
     }
 
-    public void NewHandler(ActionEvent event) throws IOException {  //  IOException --> function could not find .fxml file
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("AddArtist.fxml"));
-        Parent addArtistRoot = loader.load();
-        AddArtistController addArtistController = loader.getController();
+    public void CreateAddArtistPane(ActionEvent event) throws IOException {  //  IOException --> function could not find .fxml file
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AddArtist.fxml"));   //  .fxml
+        Parent addArtistRoot = loader.load();                               //  root
+        AddArtistController addArtistController = loader.getController();   //  controller
 
         /* Se invece volessi aggiungere il pannello al contenitore principale
         mainPane.getChildren().add(addArtistRoot);
@@ -250,7 +254,36 @@ public class SearchController {
         Scene addArtistScene = new Scene(addArtistRoot);
         Stage addArtistStage = new Stage();
         addArtistStage.setScene(addArtistScene);
+
+        //  Icon
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("img/artist.png")).openStream());
+        addArtistStage.getIcons().add(icon);
+
+        addArtistStage.setTitle("Artist");
         addArtistStage.show();
+    }
+
+    public void CreateAddAlbumPane(ActionEvent event) throws IOException {  //  IOException --> function could not find .fxml file
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AddAlbum.fxml"));   //  .fxml
+        Parent addAlbumRoot = loader.load();                               //  root
+        AddAlbumController addAlbumController = loader.getController();   //  controller
+
+        /* Se invece volessi aggiungere il pannello al contenitore principale
+        mainPane.getChildren().add(addAlbumRoot);
+         */
+
+        //  Create stage + scene for the new panel
+        Scene addAlbumScene = new Scene(addAlbumRoot);
+        Stage addAlbumStage = new Stage();
+        addAlbumStage.setScene(addAlbumScene);
+
+        //  Icon
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("img/album.png")).openStream());
+        addAlbumStage.getIcons().add(icon);
+
+        addAlbumStage.setTitle("Album");
+        addAlbumStage.show();
     }
 
 

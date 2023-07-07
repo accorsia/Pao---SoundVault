@@ -25,16 +25,22 @@ public class DatabaseManager {
         System.out.println("OK!");  //  debug
     }
 
-    public void close() throws SQLException {
-        if (conn != null) {
-            statement.close();
-            conn.close();
+    public void close() {
+        try
+        {
+            if (conn != null) {
+                statement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            System.out.print(Utilities.debHelp() + "ERROR:\t closing database\n");
+            e.printStackTrace();
         }
 
         System.out.print(Utilities.debHelp() + "> Closing database...\n");  //  debug
     }
 
-    public void updateDb() throws SQLException, IOException {
+    public void updateDb() throws IOException {
         executeSqlScript("GoldPlatUpdater.sql");
         System.out.println(Utilities.debHelp() + "> Updating database OK");
     }
@@ -68,66 +74,133 @@ public class DatabaseManager {
 
     }
 
-    public void restore() throws SQLException, IOException {
-        statement.executeQuery("drop table if exists Artist");  //  delete
-        executeSqlScript("CreateDb.sql");               //  create
-        executeSqlScript("RestoreArtistValues.sql");    //  fill Artist
-        executeSqlScript("RestoreAlbumValues.sql");     //  fill Album
+    public void restore() {
+        try {
+            statement.executeQuery("drop table if exists Artist");  // delete
+            executeSqlScript("CreateDb.sql");                       // create
+            executeSqlScript("RestoreArtistValues.sql");            // fill Artist
+            executeSqlScript("RestoreAlbumValues.sql");             // fill Album
+        } catch (SQLException e) {
+            System.out.println(Utilities.debHelp() + "ERROR:\tRestoring the database");
+            e.printStackTrace();
+        }
+
     }
 
     //  Read
-    public ResultSet executeQuery(String query) throws SQLException {
-        System.out.print(Utilities.debHelp() + "> Executing the query:\t\"" + query + "\"\n");
-        return statement.executeQuery(query);
+    public ResultSet executeQuery(String query) {
+        try
+        {
+            System.out.print(Utilities.debHelp() + "> Executing the query:\t\"" + query + "\"\n");
+            return statement.executeQuery(query);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(Utilities.debHelp() + "ERROR: Query:\t" + query);
+            e.printStackTrace();
+        }
+        return null;
     }
 
     //  Write
-    public int executeUpdate(String query) throws SQLException {
+    public int executeUpdate(String query) {
 
-        System.out.print(Utilities.debHelp() + "> Updating database...\n");
-        return statement.executeUpdate(query);
+        try
+        {
+            System.out.print(Utilities.debHelp() + "> Updating database...\n");
+            return statement.executeUpdate(query);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(Utilities.debHelp() + "ERROR: Query:\t" + query);
+            e.printStackTrace();
+        }
+        return -1;
     }
 
-    public String printRs(ResultSet rs) throws SQLException {
-        return Utilities.printRs(rs);
+    //  Overload: 1st version
+    public String addArtistRecord(String stageName, String name, String birth)  {
+        String addQuery = "insert into Artist (\"Stage Name\", Name, Birth)\n" +
+                "values\n" +
+                "('" + stageName + "' , '" + name + "' , " + birth + ");" ;
+
+        try
+        {
+            statement.executeUpdate(addQuery);
+        } catch (SQLException e) {
+            System.out.println(Utilities.debHelp() + "ERROR:\tAdding an Artist (3 param) --> query: " + addQuery);
+            e.printStackTrace();
+        }
+        return addQuery;
     }
 
-    public String getMetadata() throws SQLException {
-        DatabaseMetaData dbMd = conn.getMetaData();
+    //  Overload: 2nd version
+    public String addArtistRecord(String stageName, String name, String birth, int nGold, int nPlat) {
+        String addQuery = "insert into Artist (\"Stage Name\", Name, Birth, \"# Gold\", \"# Plat\")\n" +
+                "values\n" +
+                "('" + stageName + "' , '" + name + "' , " + birth + ", " + nGold + ", " + nPlat + ");" ;
+        try {
+            statement.executeUpdate(addQuery);
+        } catch (SQLException e) {
+            System.out.println(Utilities.debHelp() + "ERROR:\tAdding an Artist (5 param) --> query: " + addQuery);
+            e.printStackTrace();
+        }
+        return addQuery;
+    }
+
+    public String printRs(ResultSet rs) {
+        try {
+            return Utilities.printRs(rs);
+        } catch (SQLException e) {
+            System.out.println(Utilities.debHelp() + "ERROR:\tprintRs()");
+        }
+        return "error";
+    }
+
+    public String getMetadata() {
         StringBuilder sb = new StringBuilder();
-        
-        //  db. info
-        sb.append("\n---\t Database metadata\t---\n");
 
-        sb.append("Name: " + dbMd.getDatabaseProductName() + "\n");
-        sb.append("Version: " + dbMd.getDatabaseProductVersion() + "\n");
-        sb.append("Driver (JDBC): " + dbMd.getDriverName() + "\n\n");
+        try
+        {
+            DatabaseMetaData dbMd = conn.getMetaData();
 
+            //  db. info
+            sb.append("\n---\t Database metadata\t---\n");
 
-        //  Tables info
-        sb.append("---\t Tables metadata\t---\n");
+            sb.append("Name: " + dbMd.getDatabaseProductName() + "\n");
+            sb.append("Version: " + dbMd.getDatabaseProductVersion() + "\n");
+            sb.append("Driver (JDBC): " + dbMd.getDriverName() + "\n\n");
 
-        ResultSet tables = dbMd.getTables(null, null, null, null);
+            //  Tables info
+            sb.append("---\t Tables metadata\t---\n");
 
-        //  Scroll tables
-        while (tables.next()) {
-            String tableName = tables.getString("TABLE_NAME");
+            ResultSet tables = dbMd.getTables(null, null, null, null);
 
-            //  Exclude system tables
-            if (!tableName.startsWith("sqlite_"))
-            {
-                sb.append(tableName + ":\t(");
+            //  Scroll tables
+            while (tables.next()) {
+                String tableName = tables.getString("TABLE_NAME");
 
-                //  Scroll columns for each table
-                ResultSet columnsResultSet = dbMd.getColumns(null, null, tableName, null);
-                while (columnsResultSet.next()) {
-                    String columnName = columnsResultSet.getString("COLUMN_NAME");
-                    sb.append(columnName + ", ");
+                //  Exclude system tables
+                if (!tableName.startsWith("sqlite_"))
+                {
+                    sb.append(tableName + ":\t(");
+
+                    //  Scroll columns for each table
+                    ResultSet columnsResultSet = dbMd.getColumns(null, null, tableName, null);
+                    while (columnsResultSet.next()) {
+                        String columnName = columnsResultSet.getString("COLUMN_NAME");
+                        sb.append(columnName + ", ");
+                    }
+
+                    sb.append(")\n");
                 }
 
-                sb.append(")\n");
             }
-
+        }
+        catch (SQLException e)
+        {
+            System.out.println(Utilities.debHelp() + "ERROR:\tGetting metadata from database");
+            e.printStackTrace();
         }
 
         return sb.toString();

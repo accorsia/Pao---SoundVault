@@ -19,6 +19,10 @@ public class Main extends Application {
         launch(args);
     }
 
+    public static DatabaseManager getDb() {
+        return db;
+    }
+
     @Override
     public void start(Stage stage) throws IOException, SQLException {
 
@@ -53,11 +57,7 @@ public class Main extends Application {
         //  Close database when you close the form
         stage.setOnCloseRequest(event -> {
             if (db != null) {
-                try {
-                    db.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                db.close();
             }
         });
     }

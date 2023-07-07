@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="564.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unimn.soundvault.SearchController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="566.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unimn.soundvault.MainController">
    <children>
       <Button fx:id="artistSearchButton" layoutX="172.0" layoutY="38.0" mnemonicParsing="false" onAction="#SearchForArtist" text="search" />
       <TextField fx:id="artistSearchField" layoutX="15.0" layoutY="38.0" promptText="search your artist here..." />
@@ -71,8 +71,8 @@
           </Menu>
           <Menu fx:id="addMenu" mnemonicParsing="false" text="Add">
                <items>
-                  <MenuItem fx:id="addMenuArtistItem" mnemonicParsing="false" onAction="#NewHandler" text="Artist" />
-                  <MenuItem fx:id="addMenuAlbumItem" mnemonicParsing="false" text="Album" />
+                  <MenuItem fx:id="addMenuArtistItem" mnemonicParsing="false" onAction="#CreateAddArtistPane" text="Artist" />
+                  <MenuItem fx:id="addMenuAlbumItem" mnemonicParsing="false" onAction="#CreateAddAlbumPane" text="Album" />
                </items></Menu>
         </menus>
       </MenuBar>

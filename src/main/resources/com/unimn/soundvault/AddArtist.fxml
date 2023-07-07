@@ -6,23 +6,21 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="306.0" prefWidth="442.0" text="Add Artist" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1">
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="267.0" prefWidth="438.0" text="Add Artist" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unimn.soundvault.AddArtistController">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="247.0" prefWidth="434.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="280.0" prefWidth="434.0">
          <children>
-            <Label layoutX="48.0" layoutY="33.0" text="ida" />
-            <Label layoutX="28.0" layoutY="77.0" text="Stage Name" />
-            <Label layoutX="44.0" layoutY="157.0" text="Birth" />
-            <Label layoutX="42.0" layoutY="201.0" text="# Gold" />
-            <Label layoutX="45.0" layoutY="245.0" text="# Plat" />
-            <Label layoutX="42.0" layoutY="115.0" text="Name" />
-            <TextField layoutX="126.0" layoutY="29.0" />
-            <TextField layoutX="126.0" layoutY="73.0" />
-            <TextField layoutX="126.0" layoutY="111.0" />
-            <TextField layoutX="126.0" layoutY="153.0" />
-            <TextField layoutX="126.0" layoutY="197.0" />
-            <TextField layoutX="126.0" layoutY="241.0" />
-            <Button layoutX="329.0" layoutY="124.0" mnemonicParsing="false" text="SAVE!" textAlignment="CENTER" />
+            <Label layoutX="32.0" layoutY="28.0" text="Stage Name" />
+            <Label layoutX="28.0" layoutY="108.0" text="Birth (y-m-d)" />
+            <Label layoutX="46.0" layoutY="152.0" text="# Gold" />
+            <Label layoutX="49.0" layoutY="196.0" text="# Plat" />
+            <Label layoutX="46.0" layoutY="66.0" text="Name" />
+            <TextField fx:id="stagenameTxFld" layoutX="130.0" layoutY="24.0" promptText="how do you call him" />
+            <TextField fx:id="nameTxFld" layoutX="130.0" layoutY="62.0" promptText="his real name" />
+            <TextField fx:id="birthTxFld" layoutX="130.0" layoutY="104.0" promptText="SQLite: yyyy-mm-dd" />
+            <TextField fx:id="goldTxFld" layoutX="130.0" layoutY="148.0" promptText="NOT Necessary (automatic)" />
+            <TextField fx:id="platTxFld" layoutX="130.0" layoutY="192.0" promptText="NOT Necessary (automatic)" />
+            <Button fx:id="saveButton" layoutX="313.0" layoutY="51.0" mnemonicParsing="false" onAction="#SaveButton" prefHeight="65.0" prefWidth="91.0" text="SAVE!" textAlignment="CENTER" />
          </children></AnchorPane>
   </content>
 </TitledPane>
