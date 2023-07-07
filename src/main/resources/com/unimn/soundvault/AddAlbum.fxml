@@ -16,12 +16,12 @@
                 <Label layoutX="51.0" layoutY="30.0" text="ida" />
                 <Label layoutX="47.0" layoutY="152.0" text="Gold" />
                 <Label layoutX="50.0" layoutY="196.0" text="Plat" />
-                <Label layoutX="18.0" layoutY="112.0" text="Release (y-m-d)" />
-                <TextField fx:id="stagenameTxFld" layoutX="137.0" layoutY="69.0" promptText="album chosen name" />
-                <TextField fx:id="nameTxFld" layoutX="137.0" layoutY="107.0" promptText="SQLite: yyyy-mm-dd" />
-                <Button fx:id="saveButton" layoutX="312.0" layoutY="88.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="91.0" text="SAVE!" textAlignment="CENTER" />
-            <RadioButton layoutX="204.0" layoutY="152.0" mnemonicParsing="false" />
-            <RadioButton layoutX="204.0" layoutY="196.0" mnemonicParsing="false" />
+                <Label layoutX="18.0" layoutY="112.0" text="Release year" />
+                <TextField fx:id="nameTxFld" layoutX="137.0" layoutY="69.0" promptText="album chosen name" />
+                <TextField fx:id="releaseTxFld" layoutX="137.0" layoutY="107.0" promptText="eg: 2022" />
+                <Button fx:id="saveButton" layoutX="312.0" layoutY="88.0" mnemonicParsing="false" onAction="#SaveButton" prefHeight="65.0" prefWidth="91.0" text="SAVE!" textAlignment="CENTER" />
+            <RadioButton fx:id="goldRadBtn" layoutX="204.0" layoutY="152.0" mnemonicParsing="false" />
+            <RadioButton fx:id="platRadBtn" layoutX="204.0" layoutY="196.0" mnemonicParsing="false" />
             <ChoiceBox fx:id="idaChoiceBox" layoutX="137.0" layoutY="26.0" prefWidth="150.0" />
             </children></AnchorPane>
     </content>

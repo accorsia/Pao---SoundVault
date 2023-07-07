@@ -148,6 +148,27 @@ public class DatabaseManager {
         return addQuery;
     }
 
+    public String addAlbumRecord(String name, String release, boolean gold, boolean plat, int ida) {
+        //  Convert boolean to int
+        int intGold = gold ? 1 : 0;
+        int intPlat = plat ? 1 : 0;
+
+        String addQuery = "insert into Album (Name, \"Release\", Gold, Plat, ida)\n"
+                + "values\n"
+                + "("
+                + "'" + name + "', '" + release + "', " + intGold + ", " + intPlat + ", " + ida
+                + ")";
+
+        try {
+            statement.executeUpdate(addQuery);
+        } catch (SQLException e) {
+            System.out.println(Utilities.debHelp() + "ERROR:\tAdding an Album --> query: " + addQuery);
+            e.printStackTrace();
+        }
+
+        return addQuery;
+    }
+
     public String printRs(ResultSet rs) {
         try {
             return Utilities.printRs(rs);
