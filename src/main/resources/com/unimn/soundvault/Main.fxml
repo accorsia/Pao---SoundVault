@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -13,33 +14,40 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="566.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unimn.soundvault.MainController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="547.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unimn.soundvault.controllers.MainController">
    <children>
-      <Button fx:id="artistSearchButton" layoutX="172.0" layoutY="38.0" mnemonicParsing="false" onAction="#SearchForArtist" text="search" />
-      <TextField fx:id="artistSearchField" layoutX="15.0" layoutY="38.0" promptText="search your artist here..." />
-      <Button fx:id="albumSearchButton" layoutX="171.0" layoutY="152.0" mnemonicParsing="false" onAction="#SearchForAlbum" text="search" />
-      <TextField fx:id="albumSearchField" layoutX="14.0" layoutY="152.0" promptText="search your album here..." />
-      <RadioButton fx:id="artRadBut_ida" layoutX="15.0" layoutY="94.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(a)">
+      <Button fx:id="artistSearchButton" layoutX="176.0" layoutY="71.0" mnemonicParsing="false" onAction="#SearchForArtist" text="search" />
+      <TextField fx:id="artistSearchField" layoutX="19.0" layoutY="71.0" onAction="#SearchForArtist" promptText="search your artist here..." />
+      <Button fx:id="albumSearchButton" layoutX="441.0" layoutY="75.0" mnemonicParsing="false" onAction="#SearchForAlbum" text="search" />
+      <TextField fx:id="albumSearchField" layoutX="284.0" layoutY="75.0" promptText="search your album here..." />
+      <RadioButton fx:id="artRadBut_ida" layoutX="19.0" layoutY="127.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(a)">
          <toggleGroup>
             <ToggleGroup fx:id="artistRadio" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="artRadBut_stage" layoutX="15.0" layoutY="119.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Stage Name" toggleGroup="$artistRadio" />
-      <RadioButton fx:id="artRadBut_birth" layoutX="122.0" layoutY="94.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Birth" toggleGroup="$artistRadio" />
-      <RadioButton fx:id="artRadBut_name" layoutX="122.0" layoutY="119.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Name" toggleGroup="$artistRadio" />
-      <Text layoutX="22.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What will you write in the texfield?" wrappingWidth="206.0" />
-      <RadioButton fx:id="albRadButt_idb" layoutX="12.0" layoutY="209.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(b)">
+      <RadioButton fx:id="artRadBut_stage" layoutX="19.0" layoutY="152.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Stage Name" toggleGroup="$artistRadio" />
+      <RadioButton fx:id="artRadBut_birth" layoutX="126.0" layoutY="127.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Birth" toggleGroup="$artistRadio" />
+      <RadioButton fx:id="artRadBut_name" layoutX="126.0" layoutY="152.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Name" toggleGroup="$artistRadio" />
+      <Text layoutX="26.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What will you write in the texfield?" textAlignment="CENTER" wrappingWidth="206.0">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font></Text>
+      <RadioButton fx:id="albRadButt_idb" layoutX="282.0" layoutY="132.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="id(b)">
          <toggleGroup>
             <ToggleGroup fx:id="albumRadio" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="albRadButt_gold" layoutX="12.0" layoutY="234.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="# Gold" toggleGroup="$albumRadio" />
-      <RadioButton fx:id="albRadButt_name" layoutX="119.0" layoutY="209.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Name" toggleGroup="$albumRadio" />
-      <RadioButton fx:id="albRadButt_plat" layoutX="119.0" layoutY="234.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="# Plat" toggleGroup="$albumRadio" />
-      <Text layoutX="18.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What will you write in the texfield?" wrappingWidth="206.0" />
-      <TableView fx:id="mainTable" layoutX="255.0" layoutY="14.0" prefHeight="229.0" prefWidth="292.0" />
-      <GridPane fx:id="artistMetadataPane" gridLinesVisible="true" layoutX="14.0" layoutY="267.0" prefHeight="119.0" prefWidth="251.0" style="-fx-background-color: white; -fx-border-radius: 10;">
+      <RadioButton fx:id="albRadButt_gold" layoutX="282.0" layoutY="157.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="# Gold" toggleGroup="$albumRadio" />
+      <RadioButton fx:id="albRadButt_name" layoutX="359.0" layoutY="132.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="Name" toggleGroup="$albumRadio" />
+      <RadioButton fx:id="albRadButt_plat" layoutX="359.0" layoutY="157.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="100.0" text="# Plat" toggleGroup="$albumRadio" />
+      <Text layoutX="288.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What will you write in the texfield?" textAlignment="CENTER" wrappingWidth="206.0">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font></Text>
+      <TableView fx:id="mainTable" layoutX="19.0" layoutY="193.0" prefHeight="93.0" prefWidth="480.0" />
+      <GridPane fx:id="artistMetadataPane" alignment="BOTTOM_LEFT" gridLinesVisible="true" layoutX="19.0" layoutY="324.0" prefHeight="136.0" prefWidth="234.0" style="-fx-background-color: white; -fx-border-radius: 10;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -50,8 +58,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Separator layoutX="14.0" layoutY="258.0" prefHeight="0.0" prefWidth="536.0" />
-      <GridPane fx:id="albumMetadataPane" gridLinesVisible="true" layoutX="277.0" layoutY="267.0" prefHeight="119.0" prefWidth="270.0" style="-fx-background-color: white; -fx-border-radius: 10;">
+      <Separator layoutX="14.0" layoutY="308.0" prefHeight="3.0" prefWidth="508.0" />
+      <GridPane fx:id="albumMetadataPane" alignment="BOTTOM_RIGHT" gridLinesVisible="true" layoutX="274.0" layoutY="324.0" prefHeight="136.0" prefWidth="247.0" style="-fx-background-color: white; -fx-border-radius: 10;">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -76,5 +84,17 @@
                </items></Menu>
         </menus>
       </MenuBar>
+      <RadioButton fx:id="albRadButt_ida" layoutX="437.0" layoutY="136.0" mnemonicParsing="false" text="id(a)" toggleGroup="$albumRadio" />
+      <Label layoutX="68.0" layoutY="44.0" text="Search for Artist">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="327.0" layoutY="48.0" text="Search for Album">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Separator layoutX="251.0" layoutY="39.0" orientation="VERTICAL" prefHeight="143.0" prefWidth="2.0" />
    </children>
 </AnchorPane>

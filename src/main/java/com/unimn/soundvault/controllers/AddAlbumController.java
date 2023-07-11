@@ -1,11 +1,14 @@
-package com.unimn.soundvault;
+package com.unimn.soundvault.controllers;
 
-import javafx.event.ActionEvent;
+import com.unimn.soundvault.Main;
+import com.unimn.soundvault.Utilities;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -23,6 +26,12 @@ public class AddAlbumController implements Initializable {
 
     public RadioButton goldRadBtn;
     public RadioButton platRadBtn;
+
+    private Stage parentStage;
+
+    public void setParentStage(Stage stage) {
+        parentStage = stage;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,7 +71,7 @@ public class AddAlbumController implements Initializable {
         idaChoiceBox.getItems().addAll(itemCheckBox);
     }
 
-    public void SaveButton(ActionEvent actionEvent) {
+    public void SaveButton() {
         int ida = Integer.parseInt(idaChoiceBox.getValue().split("\\s*-\\s*")[0].trim());
         String name = nameTxFld.getText();
         String release = releaseTxFld.getText();
@@ -72,5 +81,19 @@ public class AddAlbumController implements Initializable {
         Main.getDb().addAlbumRecord(name, release, gold, plat, ida);
 
         System.out.println(Utilities.debHelp() + "Query executed! Album added!");
+        ShowSuccessAlert();
+
+    }
+
+    public void ShowSuccessAlert()
+    {
+        //  Create INFORMATION alert
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Album aggiunto con successo!");
+
+        alert.showAndWait();    //  show alert and wait for exit
+
     }
 }

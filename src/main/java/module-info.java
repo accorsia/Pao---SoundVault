@@ -9,4 +9,6 @@ module com.unimn.soundvault {
 
     opens com.unimn.soundvault to javafx.fxml;
     exports com.unimn.soundvault;
+    exports com.unimn.soundvault.controllers;
+    opens com.unimn.soundvault.controllers to javafx.fxml;
 }

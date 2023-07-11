@@ -1,7 +1,10 @@
-package com.unimn.soundvault;
+package com.unimn.soundvault.controllers;
 
+import com.unimn.soundvault.Main;
+import com.unimn.soundvault.Utilities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -45,6 +48,17 @@ public class AddArtistController {
         System.out.println(Utilities.debHelp() + "Query executed! Artist added!");
 
 
+    }
+
+    public void ShowSuccessAlert()
+    {
+        //  Create INFORMATION alert
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Artista aggiunto con successo!");
+
+        alert.showAndWait();    //  show alert and wait for exit
     }
 
 }

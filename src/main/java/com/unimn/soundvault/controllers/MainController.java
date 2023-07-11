@@ -1,5 +1,8 @@
-package com.unimn.soundvault;
+package com.unimn.soundvault.controllers;
 
+import com.unimn.soundvault.DatabaseSafeGetter;
+import com.unimn.soundvault.Main;
+import com.unimn.soundvault.Utilities;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -47,6 +50,7 @@ public class MainController {
     public RadioButton albRadButt_gold;
     public RadioButton albRadButt_name;
     public RadioButton albRadButt_plat;
+    public RadioButton albRadButt_ida;
 
     //  TextField
     public TextField artistSearchField;
@@ -99,8 +103,8 @@ public class MainController {
 
         gridPane.getChildren().clear();     //  remove old label --> so they won't overlap
         ResultSetMetaData md = rs.getMetaData();
-        Label name = null;
-        Label value = null;
+        Label name;
+        Label value;
 
         for(int i=1; i<=md.getColumnCount(); i++)
         {
@@ -151,8 +155,8 @@ public class MainController {
 
             String query = "SELECT * FROM Artist WHERE \"" + targetColumn + "\" = \"" + artistSearchField.getText() + "\"";
 
-            populateTable(mainTable, Main.db.executeQuery(query));    //  Update 'mainTable'
-            populateGridPane(artistMetadataPane, Main.db.executeQuery(query));
+            populateTable(mainTable, Main.getDb().executeQuery(query));    //  Update 'mainTable'
+            populateGridPane(artistMetadataPane, Main.getDb().executeQuery(query));
         }
 
 
@@ -188,16 +192,18 @@ public class MainController {
                 targetColumn = "Name";
             else if (albRadButt_plat.isSelected())
                 targetColumn = "Plat";
+            else if (albRadButt_ida.isSelected())
+                targetColumn = "ida";
 
             String query = "SELECT * FROM Album WHERE \"" + targetColumn + "\" = \"" + albumSearchField.getText() + "\"";
 
-            populateTable(mainTable, Main.db.executeQuery(query));
-            populateGridPane(albumMetadataPane, Main.db.executeQuery(query));
+            populateTable(mainTable, Main.getDb().executeQuery(query));
+            populateGridPane(albumMetadataPane, Main.getDb().executeQuery(query));
 
             //  Also show metadata for the artist's album
-            String albumIda = Main.db.executeQuery(query).getString(6);
+            String albumIda = Main.getDb().executeQuery(query).getString(6);
             String artistQuery = "SELECT * FROM Artist where \"Ida\" = \"" +  albumIda + "\"";
-            populateGridPane(artistMetadataPane, Main.db.executeQuery(artistQuery));
+            populateGridPane(artistMetadataPane, Main.getDb().executeQuery(artistQuery));
         }
 
 
@@ -212,19 +218,12 @@ public class MainController {
         alert.showAndWait();
     }
 
-    //  Debugger sake
-    public static void GetArtistMetadata(ResultSet rs) throws SQLException {
-        ResultSetMetaData md = rs.getMetaData();
-        StringBuilder sb = new StringBuilder();
-
-        for(int i=1; i<=md.getColumnCount(); i++)
-            sb.append(md.getColumnName(i) + ":\t" + rs.getString(i) + "\n");
-
-        System.out.println(Utilities.debHelp() + sb);
-    }
 
 
-    public void OpenAbout(ActionEvent event) throws SQLException {
+
+    //  MENU ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void OpenAbout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About");
         alert.setHeaderText(null);
@@ -238,13 +237,11 @@ public class MainController {
         alert.showAndWait();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public void CreateAddArtistPane(ActionEvent event) throws IOException {  //  IOException --> function could not find .fxml file
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AddArtist.fxml"));   //  .fxml
         Parent addArtistRoot = loader.load();                               //  root
-        AddArtistController addArtistController = loader.getController();   //  controller
+
 
         /* Se invece volessi aggiungere il pannello al contenitore principale
         mainPane.getChildren().add(addArtistRoot);
@@ -267,7 +264,6 @@ public class MainController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AddAlbum.fxml"));   //  .fxml
         Parent addAlbumRoot = loader.load();                               //  root
-        AddAlbumController addAlbumController = loader.getController();   //  controller
 
         /* Se invece volessi aggiungere il pannello al contenitore principale
         mainPane.getChildren().add(addAlbumRoot);
@@ -285,6 +281,5 @@ public class MainController {
         addAlbumStage.setTitle("Album");
         addAlbumStage.show();
     }
-
 
 }

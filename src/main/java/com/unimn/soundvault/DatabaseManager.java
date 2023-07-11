@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.text.MessageFormat;
 
 public class DatabaseManager {
 
@@ -153,11 +154,10 @@ public class DatabaseManager {
         int intGold = gold ? 1 : 0;
         int intPlat = plat ? 1 : 0;
 
-        String addQuery = "insert into Album (Name, \"Release\", Gold, Plat, ida)\n"
-                + "values\n"
-                + "("
-                + "'" + name + "', '" + release + "', " + intGold + ", " + intPlat + ", " + ida
-                + ")";
+        String addQuery = MessageFormat.format("""
+                insert into Album (Name, "Release", Gold, Plat, ida)
+                values
+                (''{0}'', ''{1}'', {2}, {3}, {4})""", name, release, intGold, intPlat, ida);
 
         try {
             statement.executeUpdate(addQuery);
