@@ -1,64 +1,73 @@
 # SoundVault
 
-**SoundVault** è un'applicazione per la gestione di un archivio musicale.
+**SoundVault** is a Java-based application for managing a music archive, allowing users to store and retrieve information about artists and albums through an SQLite database.
 
-## Requisiti di sistema
+## System Requirements
 
-- Java 8 o versione successiva
+- Java 8 or later
 - SQLite
 
-## Configurazione del database
+## Database Configuration
 
-Il database utilizzato dall'applicazione è SQLite. Prima di avviare l'applicazione, assicurarsi che il file del database "`identifier.sqlite`" sia presente nella directory del progetto.
+The application uses **SQLite** as its database. Before running the application, ensure that the database file **`identifier.sqlite`** is present in the project directory.
 
-## Avvio dell'applicazione
+## Running the Application
 
-Per avviare l'applicazione, eseguire il file "`Main.java`".
+To start the application, execute the `Main.java` file.
 
-## Funzionalità
+## Features
 
-### Classe `DatabaseManager`
+### `DatabaseManager` Class
 
-La classe `DatabaseManager` si occupa di gestire l'accesso al database e l'esecuzione di query SQL. Contiene i seguenti metodi:
+The `DatabaseManager` class handles database access and SQL queries execution. It provides the following methods:
 
-- `DatabaseManager()`: Costruttore che stabilisce una connessione al database SQLite.
-- `close()`: Chiude la connessione al database.
-- `updateDb()`: Aggiorna il database eseguendo lo script "`GoldPlatUpdater.sql`".
-- `executeSqlScript(String scriptFileName)`: Esegue uno script SQL specificato dal nome del file.
-- `restore()`: Ripristina il database eliminando e ricreando le tabelle.
-- `executeQuery(String query)`: Esegue una query di lettura sul database.
-- `executeUpdate(String query)`: Esegue una query di aggiornamento sul database.
-- `printRs(ResultSet rs)`: Restituisce una rappresentazione formattata di un oggetto `ResultSet`.
-- `showMetadata()`: Mostra le informazioni sul database e sulle tabelle.
+- `DatabaseManager()`: Establishes a connection to the SQLite database.
+- `close()`: Closes the database connection.
+- `updateDb()`: Updates the database by executing the `"GoldPlatUpdater.sql"` script.
+- `executeSqlScript(String scriptFileName)`: Runs a specified SQL script file.
+- `restore()`: Restores the database by deleting and recreating tables.
+- `executeQuery(String query)`: Executes a read query on the database.
+- `executeUpdate(String query)`: Executes an update query on the database.
+- `printRs(ResultSet rs)`: Returns a formatted representation of a `ResultSet` object.
+- `showMetadata()`: Displays database and table information.
 
-### Classe `DatabaseSafeGetter`
+### `DatabaseSafeGetter` Class
 
-La classe `DatabaseSafeGetter` fornisce un metodo statico `getDb()` per ottenere un'istanza di `DatabaseManager` in modo sicuro. Controlla se il database è accessibile e aggiornato, altrimenti fornisce indicazioni su come ripristinarlo.
+The `DatabaseSafeGetter` class provides a static method `getDb()` to obtain a safe instance of `DatabaseManager`. It checks whether the database is accessible and up-to-date, providing guidance if a restore is required.
 
-### Classe `Main`
+### `Main` Class
 
-La classe `Main` è l'entry point dell'applicazione. Si occupa di avviare l'interfaccia grafica e gestisce la chiusura del database quando la finestra viene chiusa.
+The `Main` class serves as the application entry point. It launches the graphical interface and ensures the database connection is properly closed when the application is terminated.
 
-### Classe `SearchController`
+### `SearchController` Class
 
-La classe `SearchController` gestisce le funzionalità di ricerca nel database. Permette di cercare artisti e album in base a diversi criteri e visualizza i risultati in una tabella. Mostra anche i metadati degli artisti e degli album selezionati.
+The `SearchController` class manages search functionalities within the database, allowing users to search for **artists** and **albums** based on different criteria. It also displays metadata of the selected artists and albums.
 
-### Classe `Utilities`
+### `Utilities` Class
 
-La classe `Utilities` contiene metodi di utilità per la formattazione e la gestione delle stringhe. In particolare, contiene il metodo `debHelp()` per ottenere informazioni di debug sul punto di esecuzione del codice.
+The `Utilities` class provides utility functions for string formatting and debugging. It includes the `debHelp()` method to retrieve execution trace information.
 
-## Caratteristiche
+## Project Structure
 
-- Gestione di un archivio musicale.
-- Accesso al database SQLite.
-- Esecuzione di query SQL.
-- Aggiornamento del database.
-- Ripristino del database.
-- Ricerca di artisti e album.
-- Visualizzazione dei risultati in una tabella.
-- Mostra metadati degli artisti e degli album.
-- Metodi di utilità per la formattazione e la gestione delle stringhe.
+- `Main.java`: Entry point for launching the application.
+- `DatabaseManager.java`: Handles database operations.
+- `DatabaseSafeGetter.java`: Ensures safe database access.
+- `SearchController.java`: Manages search functionality.
+- `Utilities.java`: Provides utility functions.
+- `resources/identifier.sqlite`: SQLite database file.
+- `resources/GoldPlatUpdater.sql`: SQL script for updating the database.
 
-## Licenza
+## Key Functionalities
 
-Questo progetto è concesso in licenza secondo i termini della licenza MIT.
+- Music archive management  
+- SQLite database integration  
+- SQL query execution  
+- Database updates and restoration  
+- Artist and album search  
+- Table-based result visualization  
+- Metadata display for artists and albums  
+- Utility methods for data formatting  
+
+## License
+
+This project is licensed under the **MIT License**.
